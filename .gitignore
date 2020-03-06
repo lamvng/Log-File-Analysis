@@ -1,3 +1,7 @@
-# Dataset
+# Large dataset file
 *.csv
-*.txt
+corrected
+kddcup.data
+kddcup.data_10_percent
+kddcup.names
+training_attack_types
