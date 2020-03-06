@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from load_data import load_dataframe
+from load_file import load_dataframe
+import os
 '''
 longitude = plt.subplot2grid((4, 2), (0, 0))
 latitude = plt.subplot2grid((4, 2), (0, 1))
@@ -21,5 +22,4 @@ plt.tight_layout()
 plt.show()
 #sns.pairplot(df[['distance','clutterheight', 'loss']])
 '''
-
-import_data('kddcup.data_10_percent')
+load_dataframe('kddcup.data_10_percent')
