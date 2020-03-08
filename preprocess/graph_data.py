@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from load_file import load_dataframe
+from preprocess.load_file import load_dataframe
 '''
 longitude = plt.subplot2grid((4, 2), (0, 0))
 latitude = plt.subplot2grid((4, 2), (0, 1))

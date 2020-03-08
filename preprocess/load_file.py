@@ -1,6 +1,8 @@
 # Import dataset, return a panda dataframe
 
 import pandas as pd
+import settings
+
 
 def input_data():
     print("Which dataset would you like to test?\n")
@@ -21,10 +23,12 @@ def input_data():
         print("Error in input function...")
     return filename
 
+
 def load_dataframe(filename):
     # filename = kddcup.data or = kddcup.data_10_percent
-    filename = input_data()
-    df = pd.read_csv('../data/{}'.format(filename))
+    # filename = input_data()
+    filename = "kddcup.data_10_percent"
+    df = pd.read_csv('{}/data/{}'.format(settings.root, filename))
     df = df.dropna(inplace=False)  # Drop missing value
     df = df.sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
     return df
