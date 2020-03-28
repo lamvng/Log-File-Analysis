@@ -37,5 +37,5 @@ def normalize(df):
     X = df.drop(['label', 'score'], axis='columns') # Training # Dataframe
     X = scaler.fit_transform(X)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
-    return (X_train, y_train), (X_test, y_test)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1)
+    return (X_train, Y_train), (X_test, Y_test)
