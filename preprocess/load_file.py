@@ -28,4 +28,3 @@ def load_dataframe():
     df = df.sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
     return df
 
-def normalize(df):

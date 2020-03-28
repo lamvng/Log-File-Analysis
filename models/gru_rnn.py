@@ -6,7 +6,6 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras import optimizers
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 import math
 
@@ -16,4 +15,4 @@ from preprocess.load_file import load_dataframe
 
 df = load_dataframe()
 
-def gru_rnn(df):
+
