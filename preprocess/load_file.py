@@ -13,7 +13,7 @@ def load_dataframe():
     # filename = kddcup.data or = kddcup.data_10_percent
     # fidf = lename = input_data()
     filename = "Small_Training_Set.csv"
-    df = pd.read_csv('{}/data/nsl_kdd/NSL_KDD-master/KDDTrain+_20Percent.txt'.format(settings.root, filename),
+    df = pd.read_csv('{}/data/nsl_kdd/NSL_KDD-master/{}'.format(settings.root, filename),
                      names = ["duration", "protocol_type", "service", "flag", "src_bytes", "dst_bytes", "land",\
                               "wrong_fragment", "urgent", "hot", "num_failed_logins", "logged_in", "num_compromised",\
                               "root_shell", "su_attempted", "num_root", "num_file_creations", "num_shells",\

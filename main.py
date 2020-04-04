@@ -1,9 +1,11 @@
 import settings
-from preprocess import load_file, normalize
+from preprocess import load_file, process_data
 settings.init()
+
 
 df = load_file.load_dataframe()
 
-one_hot_features = ['protocol_type', 'service', 'flag']
-df = normalize.one_hot_encode(df, one_hot_features)
-(X_train, Y_train), (X_test, Y_test) = normalize.normalize(df)
+df = process_data.encode(df)
+
+(X_train, Y_train), (X_test, Y_test) = process_data.normalize_and_split(df)
+
