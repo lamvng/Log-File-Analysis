@@ -4,14 +4,9 @@ import pandas as pd
 import settings
 
 
-def input_data():
-    filename = "./data/nsl_kdd/NSL_KDD-master/KDDTrain+_20Percent.txt"
-    return filename
-
-
 def load_dataframe():
-    # filename = kddcup.data or = kddcup.data_10_percent
-    # fidf = lename = input_data()
+    # Small_Training_Set.csv
+    # KDDTrain+.csv
     filename = "Small_Training_Set.csv"
     df = pd.read_csv('{}/data/nsl_kdd/NSL_KDD-master/{}'.format(settings.root, filename),
                      names = ["duration", "protocol_type", "service", "flag", "src_bytes", "dst_bytes", "land",\

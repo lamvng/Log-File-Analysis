@@ -21,4 +21,13 @@ plt.tight_layout()
 plt.show()
 #sns.pairplot(df[['distance','clutterheight', 'loss']])
 '''
-load_dataframe('kddcup.data_10_percent')
+
+
+# Plotting a Bar Graph to compare the models
+def important_features(columns, feature_importance_normalized):
+    plt.bar(columns, feature_importance_normalized)
+    plt.xlabel('Feature Labels')
+    plt.ylabel('Feature Importances')
+    plt.title('Comparison of the most important features')
+    plt.show()
+
