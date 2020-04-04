@@ -1,27 +1,34 @@
 import settings
 from preprocess import load_file, process_data, feature_extract
-from numpy import argsort
 
 
 settings.init()
 
+# Load training dataset
+df_train = load_file.load_file()
 
-df = load_file.load_dataframe()
 
+# Encode categorical features into numeric
 # Categorical features: protocol_type, service, flag
-df = process_data.encode(df, label_encoded_features=['protocol_type', 'service', 'flag'])
+df_train = process_data.encode(df_train, label_encoded_features=['protocol_type', 'service', 'flag'])
 
-X_train, X_test, y_train, y_test = process_data.normalize_and_split(df)
+
+# Split training and validation data
+X_train, X_validate, y_train, y_validate = process_data.normalize_and_split(df_train)
 all_features = X_train.columns.tolist()
 
+
+# Extract most important features
 # top_columns, top_score = feature_extract.random_forest(X_train, y_train, number_of_features=20)
 top_columns, top_score = feature_extract.extra_tree(X_train, y_train, number_of_features=20)
 
-index_order = argsort(top_score)[::-1]  # Return descending top score index
-with open('{}/results/most_important_features.txt'.format(settings.root), 'w') as f:
-    for i in index_order:
-        print(top_columns[i] + ":" + str(top_score[i]), file=f)
 
+# Create a dataset after feature extraction
+df_train = feature_extract.create_dataset(df_train, top_columns)  # Training set
+# Testing set...
+
+
+# Build model
 
 
 

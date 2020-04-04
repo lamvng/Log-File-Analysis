@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from preprocess.load_file import load_dataframe
+from preprocess.load_file import load_file
 '''
 longitude = plt.subplot2grid((4, 2), (0, 0))
 latitude = plt.subplot2grid((4, 2), (0, 1))
@@ -24,8 +24,8 @@ plt.show()
 
 
 # Plotting a Bar Graph to compare the models
-def important_features(columns, feature_importance_normalized):
-    plt.bar(columns, feature_importance_normalized)
+def important_features(top_columns, top_score):
+    plt.bar(top_columns, top_score)
     plt.xlabel('Feature Labels')
     plt.ylabel('Feature Importances')
     plt.title('Comparison of the most important features')

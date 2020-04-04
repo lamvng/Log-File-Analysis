@@ -80,5 +80,5 @@ def normalize_and_split(df):
     X = df.drop(['attack_type'], axis='columns')
     # X = scaler.fit_transform(X)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-    return X_train, X_test, y_train, y_test
+    X_train, X_validate, y_train, y_validate = train_test_split(X, y, test_size=0.2)
+    return X_train, X_validate, y_train, y_validate

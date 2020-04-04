@@ -1,16 +1,22 @@
 from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor
+import settings
 import numpy as np
 
 
 def pick_important_features(quantity, columns, feature_importance_normalized):
-    # feature_importance_normalized: numpy.ndarray
-    # candidates = [[a, b] for a, b in zip(columns, feature_importance_normalized)]
+    # feature_importance_normalized: numpy.ndarray: Important factor from extra_tree.fit
     # Return indexes of max-valued importance
     top_index = np.argpartition(feature_importance_normalized, -quantity)[-quantity:]
     top_columns = []
     top_score = feature_importance_normalized[top_index]
     for i in top_index:
         top_columns.append(columns[i])
+    '''
+    index_order = np.argsort(top_score)[::-1]  # Return descending top score index
+    with open('{}/results/most_important_features.txt'.format(settings.root), 'w') as f:
+        for i in index_order:
+            print(top_columns[i] + ":" + str(top_score[i]), file=f)
+    '''
     return top_columns, top_score
 
 
@@ -22,7 +28,8 @@ def random_forest(X_train, y_train, number_of_features=18):
                                             in extra_tree_forest.estimators_],
                                            axis=0)  # numpy.ndarray
     top_columns, top_score = pick_important_features(number_of_features,
-                                                     X_train.columns.tolist(), feature_importance_normalized)
+                                                     X_train.columns.tolist(),
+                                                     feature_importance_normalized)
     return top_columns, top_score
 
 
@@ -33,13 +40,10 @@ def extra_tree(X_train, y_train, number_of_features=18):
                                             in extra_tree_forest.estimators_],
                                            axis=0)  # numpy.ndarray
     top_columns, top_score = pick_important_features(number_of_features,
-                                                     X_train.columns.tolist(), feature_importance_normalized)
-
-    with open('{}/results/most_important_features.txt'.format(settings.root), 'w') as f:
-        for i in index_order:
-            print(top_columns[i] + ":" + str(top_score[i]), file=f)
-
+                                                     X_train.columns.tolist(),
+                                                     feature_importance_normalized)
     return top_columns, top_score
 
-
-# df.drop(df.columns.difference(['a', 'b']), 1, inplace=True)
+def create_dataset(df, top_columns):
+    df = df.drop(df.columns.difference(top_columns), axis=1)
+    return df
