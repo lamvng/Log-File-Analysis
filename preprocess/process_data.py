@@ -24,6 +24,10 @@ def one_hot_encode(df, feature):
     df.drop([feature], axis=1, inplace=True)
     return df
 
+def label_encode(df, feature):
+    df[feature] = df[feature].astype('category').cat.codes
+    return df
+
 
 # Function to classify label into 5 classes:
 # Normal, DoS, Probe, U2R, R2L
@@ -49,11 +53,15 @@ def classify_label(row):
 
 
 # Encode the datatype
-def encode(df):
+def encode(df, one_hot_features=None, label_encoded_features=None):
     # One hot encoding for categorical features: protocol_type, service, flag
-    one_hot_feature = ['protocol_type', 'service', 'flag']
-    for feature in one_hot_feature:
-        df = one_hot_encode(df, feature)
+    if one_hot_features != None:
+        for feature in one_hot_features:
+            df = one_hot_encode(df, feature)
+
+    if label_encoded_features != None:
+        for feature in label_encoded_features:
+            df = label_encode(df, feature)
 
     # Encode label
     df['attack_type'] = df.apply(lambda row: classify_label(row), axis='columns')
@@ -68,9 +76,9 @@ def normalize_and_split(df):
     # Normalize using MinMaxScaler
     scaler = preprocessing.MinMaxScaler()
 
-    Y = df.iloc[:, -1] # Label # Series
-    X = df.drop(['attack_type'], axis='columns') # Training # Dataframe
-    X = scaler.fit_transform(X)
+    y = df['attack_type'] # Label # Series
+    X = df.drop(['attack_type'], axis='columns')
+    # X = scaler.fit_transform(X)
 
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.15)
-    return (X_train, Y_train), (X_test, Y_test)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    return X_train, X_test, y_train, y_test

@@ -26,5 +26,6 @@ def load_dataframe():
                               "label", "score"])
     df = df.dropna(inplace=False)  # Drop missing value
     df = df.sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
+
     return df
 
