@@ -7,7 +7,7 @@ import settings
 def load_dataframe():
     # Small_Training_Set.csv
     # KDDTrain+.csv
-    filename = "Small_Training_Set.csv"
+    filename = "KDDTrain+.csv"
     df = pd.read_csv('{}/data/nsl_kdd/NSL_KDD-master/{}'.format(settings.root, filename),
                      names = ["duration", "protocol_type", "service", "flag", "src_bytes", "dst_bytes", "land",\
                               "wrong_fragment", "urgent", "hot", "num_failed_logins", "logged_in", "num_compromised",\
@@ -20,7 +20,7 @@ def load_dataframe():
                               "dst_host_srv_serror_rate", "dst_host_rerror_rate", "dst_host_srv_rerror_rate",\
                               "label", "score"])
     df = df.dropna(inplace=False)  # Drop missing value
-    df = df.sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
+    # df = df.sample(frac=1).reset_index(drop=True)  # Shuffle the dataset
 
     return df
 

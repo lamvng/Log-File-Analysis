@@ -15,16 +15,31 @@ def pick_important_features(quantity, columns, feature_importance_normalized):
 
 
 # https://www.geeksforgeeks.org/ml-extra-tree-classifier-for-feature-selection/
-def random_forest(X_train, y_train):
+def random_forest(X_train, y_train, number_of_features=18):
     extra_tree_forest = RandomForestRegressor(n_estimators=100)
     extra_tree_forest.fit(X_train, y_train)
     feature_importance_normalized = np.std([tree.feature_importances_ for tree
                                             in extra_tree_forest.estimators_],
                                            axis=0)  # numpy.ndarray
-    top_columns, top_score = pick_important_features(18, X_train.columns.tolist(), feature_importance_normalized)
+    top_columns, top_score = pick_important_features(number_of_features,
+                                                     X_train.columns.tolist(), feature_importance_normalized)
     return top_columns, top_score
 
 
+def extra_tree(X_train, y_train, number_of_features=18):
+    extra_tree_forest = ExtraTreesRegressor(n_estimators=100)
+    extra_tree_forest.fit(X_train, y_train)
+    feature_importance_normalized = np.std([tree.feature_importances_ for tree
+                                            in extra_tree_forest.estimators_],
+                                           axis=0)  # numpy.ndarray
+    top_columns, top_score = pick_important_features(number_of_features,
+                                                     X_train.columns.tolist(), feature_importance_normalized)
+
+    with open('{}/results/most_important_features.txt'.format(settings.root), 'w') as f:
+        for i in index_order:
+            print(top_columns[i] + ":" + str(top_score[i]), file=f)
+
+    return top_columns, top_score
 
 
 # df.drop(df.columns.difference(['a', 'b']), 1, inplace=True)
