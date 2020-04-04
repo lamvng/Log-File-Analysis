@@ -14,6 +14,7 @@ import math
 
 
 
+
 def build_model():
     model = keras.Sequential()
     model.add(layers.Dense(32, activation = tf.nn.relu, input_shape = (6,)))
