@@ -1,17 +1,28 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-import collections
+import os
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras import optimizers
 from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.layers import Input, Dense, LSTM, Dropout, GRU, Bidirectional
+from tensorflow import test
 from sklearn.metrics import mean_squared_error
 import math
 
 
-# fix random seed for reproducibility
+# Config Tensorflow to run on CPU only
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Run Tensorflow on CPU only
+
+# Fix random seed for reproducibility
 np.random.seed(7)
+
+
+# Test if GPU is present
+if test.gpu_device_name():
+    print('GPU found')
+else:
+    print("No GPU found")
 
 
 def build_LSTM(X_train, y_train):
@@ -45,7 +56,7 @@ def build_LSTM(X_train, y_train):
     classifier.add(Dropout(0.2))
 
     # The output layer
-    classifier.add(Dense(units=5, activation='softmax'))
+    classifier.add(Dense(units=1, activation='softmax'))
 
     # Compile the model
     classifier.compile(optimizer=optimizers.Adam(),
