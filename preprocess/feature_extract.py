@@ -45,5 +45,6 @@ def extra_tree(X_train, y_train, number_of_features=18):
     return top_columns, top_score
 
 def create_dataset(df, top_columns):
+    top_columns.append('attack_type')
     df = df.drop(df.columns.difference(top_columns), axis=1)
     return df

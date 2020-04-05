@@ -1,5 +1,6 @@
 import settings
 from preprocess import load_file, process_data, feature_extract
+from models import models
 
 
 settings.init()
@@ -25,8 +26,15 @@ top_columns, top_score = feature_extract.extra_tree(X_train, y_train, number_of_
 
 # Create a dataset after feature extraction
 df_train = feature_extract.create_dataset(df_train, top_columns)  # Training set
+# X_train, X_validate, y_train, y_validate = process_data.normalize_and_split(df_train)
+
+X_train, y_train = process_data.create_input(df_train)
 # Testing set...
 
+
+
+
+models.build_LSTM(X_train, y_train)
 
 # Build model
 
