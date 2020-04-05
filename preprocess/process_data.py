@@ -41,18 +41,17 @@ def classify_label(row):
     r2l = ['ftp_write', 'guess_passwd', 'httptunnel', 'imap', 'multihop', 'named', 'phf', 'sendmail', 'snmpgetattack', 'spy', 'snmpguess', 'warezclient', 'warezmaster', 'xlock', 'xsnoop']
 
     if row['label'].lower() in normal:
-        return 1
+        return 0
     elif row['label'].lower() in dos:
-        return 2
+        return 1
     elif row['label'].lower() in probe:
-        return 3
+        return 2
     elif row['label'].lower() in u2r:
-        return 4
+        return 3
     elif row['label'].lower() in r2l:
-        return 5
+        return 4
     else:
-        return 6
-
+        return 5
 
 # Encode the datatype
 def encode(df, one_hot_features=None, label_encoded_features=None):
@@ -88,7 +87,8 @@ def normalize_and_split(df):
     return X_train, X_validate, y_train, y_validate
 
 
-# Create input data shape for model training
+# Create LSTM input shape from dataframe
+# Output: X: 3d vector
 # https://stackoverflow.com/questions/39674713/neural-network-lstm-input-shape-from-dataframe
 def create_input(df):
     input_cols = df.columns[:-1]
@@ -112,10 +112,10 @@ def create_input(df):
     padded_sequences = pad_sequences(df.cumulative_input_vectors.tolist(), max_sequence_length).tolist()
     df['padded_input_vectors'] = pd.Series(padded_sequences).apply(np.asarray)
 
-    # Extract your training data
-    X_train_init = np.asarray(df.padded_input_vectors)
+    # Extract your data
+    X_init = np.asarray(df.padded_input_vectors)
     # Use hstack to and reshape to make the inputs a 3d vector
-    X_train = np.hstack(X_train_init).reshape(len(df), max_sequence_length, len(input_cols))
-    # y_train = np.hstack(np.asarray(df.output_vector)).reshape(len(df), len(output_cols))
-    y_train = np.hstack(np.asarray(df.output_vector))
-    return X_train, y_train
+    X = np.hstack(X_init).reshape(len(df), max_sequence_length, len(input_cols))
+    # y = np.hstack(np.asarray(df.output_vector)).reshape(len(df), len(output_cols))
+    y = np.hstack(np.asarray(df.output_vector))
+    return X, y

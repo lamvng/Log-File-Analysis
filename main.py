@@ -1,6 +1,8 @@
 import settings
 from preprocess import load_file, process_data, feature_extract
 from models import models
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
 
 
 settings.init()
@@ -25,12 +27,21 @@ top_columns, top_score = feature_extract.extra_tree(X_train, y_train, number_of_
 
 
 # Create a dataset after feature extraction
+# TODO: The dataframe (Pandas) at this step is for training and validation
 df_train = feature_extract.create_dataset(df_train, top_columns)  # Training set
-# X_train, X_validate, y_train, y_validate = process_data.normalize_and_split(df_train)
 
-X_train, y_train = process_data.create_input(df_train)
-# Testing set...
+scaler = MinMaxScaler()
+df_train[df_train.columns[:-1]] = scaler.fit_transform(df_train[df_train.columns[:-1]])
 
+# TODO: These X, y are direct input to LSTM model
+X_train, y_train = process_data.create_input(df_train)  # X as a 3D vector
+
+
+# TODO: Testing set...
+# TODO: A wrapper to:
+### Training + Validation dataframe
+### Transform input for LSTM model
+### Split validation and training
 
 
 

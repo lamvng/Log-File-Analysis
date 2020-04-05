@@ -56,12 +56,12 @@ def build_LSTM(X_train, y_train):
     classifier.add(Dropout(0.2))
 
     # The output layer
-    classifier.add(Dense(units=1, activation='softmax'))
+    classifier.add(Dense(5, activation='softmax'))
 
     # Compile the model
     classifier.compile(optimizer=optimizers.Adam(),
-                       loss='mean_squared_error',
-                       metrics=['accuracy'])
+                       loss='sparse_categorical_crossentropy',
+                       metrics=['sparse_categorical_accuracy'])
 
     # Summary
     print(classifier.summary())
@@ -69,34 +69,3 @@ def build_LSTM(X_train, y_train):
 
     # Fit
     classifier.fit(X_train, y_train, epochs=50, batch_size=32)
-
-
-def build_model():
-    model = keras.Sequential()
-    model.add(layers.Dense(32, activation = tf.nn.relu, input_shape = (6,)))
-    model.add(layers.Dense(32, activation = tf.nn.relu))
-    model.add(layers.Dense(1))
-    optimizer_function = keras.optimizers.Adam()
-    model.compile(loss = 'mean_absolute_error',\
-        optimizer = optimizer_function,\
-        metrics = ['mean_absolute_error', 'mean_squared_error'])
-    return model
-
-def build_linear():
-    model = keras.Sequential([layers.Dense(1, activation = 'linear', input_shape = (6,))])
-    optimizer_function = keras.optimizers.SGD()
-    model.compile(loss = 'mean_absolute_error',\
-        optimizer = optimizer_function,\
-        metrics = ['mean_absolute_error', 'mean_squared_error'])
-    return model
-
-
-# Train and save model
-def train(model, X_train, y_train):
-    csv_logger = keras.callbacks.CSVLogger('training.log', separator = ',', append = False)
-    history = model.fit(X_train, y_train, epochs = 1000, callbacks=[csv_logger])
-    model.save('model.h5')
-    return history
-
-
-
