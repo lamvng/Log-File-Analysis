@@ -98,14 +98,25 @@ def plot_test_after_encode(attack_type_test):
     plt.show()
 
 
+def plot_accuracy(history):
+    # summarize history for accuracy
+    # plt.plot(history.history['loss'])
+    plt.plot(history.history['sparse_categorical_accuracy'])
+    plt.plot(history.history['val_sparse_categorical_accuracy'])
+    plt.title('Sparse Categorical Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    plt.show()
 
 
-# Plotting a Bar Graph to compare the models
-def important_features(top_columns, top_score):
-    plt.bar(top_columns, top_score)
-    plt.xlabel('Feature Labels')
-    plt.ylabel('Feature Importances')
-    plt.title('Comparison of the most important features')
+def plot_loss(history):
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Loss Value')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
     plt.show()
 
 

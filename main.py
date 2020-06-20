@@ -96,17 +96,25 @@ print("X shape: " + str(X.shape))
 print("y shape: " + str(y.shape))
 
 
-# TODO: Testing set...
-# TODO: A wrapper to:
-### Training + Validation dataframe
-### Transform input for LSTM model
-### Split validation and training
+print("\nTraining model:")
+model = models.build_dnn()
+print(model.summary())
 
 
-
-models.build_LSTM(X_train, y_train)
-
-# Build model
+print("\nTraining...")
+history = models.train(model, X, y)
 
 
+print("\nHistory keys:")
+print(history.history.keys())
 
+
+print("\nAccuracy on testing set:")
+df_test = process_data.normalize(df_test)  # Normalize the test dataset
+df_test = feature_extract.create_dataset(df_test, top_columns)  # Feature Extraction
+y_test = df_test['attack_type']  # Label # Series
+X_test = df_test.drop(['attack_type'], axis='columns')  # Features # Dataframe
+
+score = model.evaluate(X_test, y_test)
+
+y_predict = model.predict(X_test)
