@@ -74,20 +74,26 @@ print("X_validate shape: " + str(X_validate.shape))
 print("y_validate shape: " + str(y_validate.shape))
 
 
+print('\nExtracting features by Extra Tree...')
 # Extract most important features
-# top_columns, top_score = feature_extract.random_forest(X_train, y_train, number_of_features=20)
+# top_columns, top_score = extract_random_forest(X_train, y_train, number_of_features=20)
 top_columns, top_score = feature_extract.extract_extra_tree(X_train, y_train, number_of_features=20)
+for i, elem in enumerate(top_columns):
+    print("{}:{}".format(top_columns[i], top_score[i]))
 
 
+print('\nCreating a new dataset after feature extraction...')
 # Create a dataset after feature extraction
 # TODO: The dataframe (Pandas) at this step is for training and validation
 df_train = feature_extract.create_dataset(df_train, top_columns)  # Training set
+print(df_train.columns)
 
-scaler = MinMaxScaler()
-df_train[df_train.columns[:-1]] = scaler.fit_transform(df_train[df_train.columns[:-1]])
 
-# TODO: These X, y are direct input to LSTM model
-X_train, y_train = process_data.create_input(df_train)  # X as a 3D vector
+print("Training data shape:")
+y = df_train['attack_type']  # Label # Series
+X = df_train.drop(['attack_type'], axis='columns')  # Features # Dataframe
+print("X shape: " + str(X.shape))
+print("y shape: " + str(y.shape))
 
 
 # TODO: Testing set...

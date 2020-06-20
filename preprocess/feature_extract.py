@@ -3,10 +3,9 @@ import settings
 import numpy as np
 
 
-def pick_important_features(quantity, columns, feature_importance_normalized):
-    # feature_importance_normalized: numpy.ndarray: Important factor from extra_tree.fit
-    # Return indexes of max-valued importance
-    top_index = np.argpartition(feature_importance_normalized, -quantity)[-quantity:]
+def pick_important_features(number_of_features, columns, feature_importance_normalized):
+    # feature_importance_normalized: numpy.ndarray: Important factor from extra_tree.fit or random_forest.fit
+    top_index = np.argpartition(feature_importance_normalized, -number_of_features)[-number_of_features:] # Return indexes of max-valued importance
     top_columns = []
     top_score = feature_importance_normalized[top_index]
     for i in top_index:
@@ -20,7 +19,6 @@ def pick_important_features(quantity, columns, feature_importance_normalized):
     return top_columns, top_score
 
 
-# https://www.geeksforgeeks.org/ml-extra-tree-classifier-for-feature-selection/
 def extract_random_forest(X_train, y_train, number_of_features=18):
     random_forest = RandomForestRegressor(n_estimators=100)
     random_forest.fit(X_train, y_train)
@@ -33,6 +31,7 @@ def extract_random_forest(X_train, y_train, number_of_features=18):
     return top_columns, top_score
 
 
+# Reference: https://www.geeksforgeeks.org/ml-extra-tree-classifier-for-feature-selection/
 def extract_extra_tree(X_train, y_train, number_of_features=18):
     extra_tree = ExtraTreesRegressor(n_estimators=100)
     extra_tree.fit(X_train, y_train)
