@@ -6,3 +6,4 @@ kddcup.data_10_percent
 # kddcup.names
 # training_attack_types
 data/*
+saved_model/*

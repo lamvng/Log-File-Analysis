@@ -110,12 +110,9 @@ print(history.history.keys())
 
 
 # Save model to file
-model_json = model.to_json()
-with open("{}/model.json".format(settings.root), "w") as json_file:
-    json_file.write(model_json)
-
-print("Save model to {}/model.h5".format(settings.root))
-model.save_weights("{}/model.h5".format(settings.root))
+path = "{}/saved_model/".format(settings.root)
+model.save(path)
+print("Model saved to {}".format(path))
 
 
 print("\nAccuracy on testing set:")
@@ -128,19 +125,3 @@ X_test = df_test.drop(['attack_type'], axis='columns')  # Features # Dataframe
 score = model.evaluate(X_test, y_test)
 
 y_predict = model.predict(X_test)
-
-
-'''
-# Load model from file
-json_file = open('{}/model.json'.format(settings.root), 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-
-# load weights into new model
-loaded_model.load_weights("{}/model.h5".format(settings.root))
-print("Loaded model from disk")
-
-loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-score = loaded_model.evaluate(X, Y, verbose=0)
-'''
