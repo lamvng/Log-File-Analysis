@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os
 from tensorflow import keras
 from tensorflow.keras.layers import Dense, Dropout
-
+from tensorflow.keras.models import model_from_json
 
 # Config Tensorflow to run on CPU only
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Run Tensorflow on CPU only
@@ -35,5 +35,4 @@ def train(model, X_train, y_train):
     history = model.fit(X_train, y_train, validation_split = 0.2, epochs = 150, callbacks=[csv_logger])
     model.save('model.h5')
     return history
-
 

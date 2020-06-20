@@ -61,6 +61,7 @@ def plot_train_before_encode(label_train):
     plt.title('Phân bố các nhãn gốc của bộ dữ liệu training', fontsize=25)
     plt.xlabel('Nhãn', fontsize=20)
     plt.ylabel('Số lượng', fontsize=20)
+    plt.show()
 
 def plot_test_before_encode(label_test):
     label_test.plot.bar(x="Số lượng", y="Nhãn", figsize=(18, 10))
@@ -69,7 +70,7 @@ def plot_test_before_encode(label_test):
     plt.title('Phân bố các nhãn gốc của bộ dữ liệu testing', fontsize=25)
     plt.xlabel('Nhãn', fontsize=20)
     plt.ylabel('Số lượng', fontsize=20)
-
+    plt.show()
 
 
 # Plot dataset after encoding
