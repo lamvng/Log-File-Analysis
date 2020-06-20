@@ -21,11 +21,11 @@ def pick_important_features(quantity, columns, feature_importance_normalized):
 
 
 # https://www.geeksforgeeks.org/ml-extra-tree-classifier-for-feature-selection/
-def random_forest(X_train, y_train, number_of_features=18):
-    extra_tree_forest = RandomForestRegressor(n_estimators=100)
-    extra_tree_forest.fit(X_train, y_train)
+def extract_random_forest(X_train, y_train, number_of_features=18):
+    random_forest = RandomForestRegressor(n_estimators=100)
+    random_forest.fit(X_train, y_train)
     feature_importance_normalized = np.std([tree.feature_importances_ for tree
-                                            in extra_tree_forest.estimators_],
+                                            in random_forest.estimators_],
                                            axis=0)  # numpy.ndarray
     top_columns, top_score = pick_important_features(number_of_features,
                                                      X_train.columns.tolist(),
@@ -33,11 +33,11 @@ def random_forest(X_train, y_train, number_of_features=18):
     return top_columns, top_score
 
 
-def extra_tree(X_train, y_train, number_of_features=18):
-    extra_tree_forest = ExtraTreesRegressor(n_estimators=100)
-    extra_tree_forest.fit(X_train, y_train)
+def extract_extra_tree(X_train, y_train, number_of_features=18):
+    extra_tree = ExtraTreesRegressor(n_estimators=100)
+    extra_tree.fit(X_train, y_train)
     feature_importance_normalized = np.std([tree.feature_importances_ for tree
-                                            in extra_tree_forest.estimators_],
+                                            in extra_tree.estimators_],
                                            axis=0)  # numpy.ndarray
     top_columns, top_score = pick_important_features(number_of_features,
                                                      X_train.columns.tolist(),

@@ -4,11 +4,10 @@ import pandas as pd
 import settings
 
 
-def load_file():
+def load_file(filename):
     # Small_Training_Set.csv
     # KDDTrain+.csv
     # KDDTest+.csv
-    filename = "Small_Training_Set.csv"
     df = pd.read_csv('{}/data/nsl_kdd/NSL_KDD-master/{}'.format(settings.root, filename),
                      names = ["duration", "protocol_type", "service", "flag", "src_bytes", "dst_bytes", "land",\
                               "wrong_fragment", "urgent", "hot", "num_failed_logins", "logged_in", "num_compromised",\
