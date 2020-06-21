@@ -79,12 +79,13 @@ print('\nExtracting features by Extra Tree...')
 # top_columns, top_score = extract_random_forest(X_train, y_train, number_of_features=20)
 top_columns, top_score = feature_extract.extract_extra_tree(X_train, y_train, number_of_features=20)
 for i, elem in enumerate(top_columns):
+    with open("{}/results/most_important_features.txt", "a+") as f:
+        print("{}:{}".format(top_columns[i], top_score[i]), file=f)
     print("{}:{}".format(top_columns[i], top_score[i]))
 
 
 print('\nCreating a new dataset after feature extraction...')
 # Create a dataset after feature extraction
-# TODO: The dataframe (Pandas) at this step is for training and validation
 df_train = feature_extract.create_dataset(df_train, top_columns)  # Training set
 print(df_train.columns)
 
@@ -124,4 +125,4 @@ X_test = df_test.drop(['attack_type'], axis='columns')  # Features # Dataframe
 
 score = model.evaluate(X_test, y_test)
 
-y_predict = model.predict(X_test)
+y_predict = model.predict_classes(X_test)
