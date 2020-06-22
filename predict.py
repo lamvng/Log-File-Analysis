@@ -12,7 +12,7 @@ settings.init()
 
 
 def predict(df_test):
-    print(colored('[+] Loading pre-weighted model...\n', 'green'))
+    print(colored('\n[+] Loading pre-weighted model...\n', 'green'))
     path = "{}/saved_model/model.h5".format(settings.root)
     loaded_model = load_model(path)
 
@@ -130,7 +130,6 @@ parser.add_argument('-v', '--verbose',
 parser.add_argument('-o',
                     '--output',
                     help='Output type',
-                    default='json',
                     choices=['csv', 'json'])
 
 
@@ -159,5 +158,11 @@ if output == 'json':
 elif output == 'csv':
     output_to_csv(sample_log_unencoded, y_predict)
 
+
+print(colored("\n[+] Analysis completed.\n", "green"))
 # conda activate mlds
-# python3 predict.py --file sample_log_2.csv --output json --verbose
+
+# python3 predict.py --file sample_log_2.csv
+# python3 predict.py --file sample_log_2.csv --verbose
+# python3 predict.py --file sample_log_2.csv --output json
+# python3 predict.py --file sample_log_2.csv --output csv
